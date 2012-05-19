@@ -28,7 +28,7 @@ Install the solr.yml file from Sunspot.
 
 Copy the initializer and add `solr_sort_by` to `all.js`
 
-`rails g spree_sunspot:install`
+`rails g spree_sunspot_search:install`
 
 Running
 =======
