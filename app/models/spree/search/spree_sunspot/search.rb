@@ -61,7 +61,7 @@ module Spree
 
           # ensure that :sort and :order are legit
           @properties[:sort] = :score unless conf.sort_fields.keys.include? @properties[:sort]
-          @properties[:order] = :desc unless [:desc, :asc].include? @properties[:sort]
+          @properties[:order] = :desc unless [:desc, :asc].include? @properties[:order]
 
           conf.display_facets.each do |name|
             @properties[name] ||= params["#{name}_facet"]
