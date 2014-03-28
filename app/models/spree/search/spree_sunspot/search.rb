@@ -17,15 +17,33 @@ module Spree
               facet("#{name}_facet")
             end
 
-            with(:price, Range.new(price.split('-').first, price.split('-').last)) if price
+            if price
+              from, to = price.split('-').first, price.split('-').last
+              if from == '*' && to == '*'
+                without(:price)
+              elsif from == '*'
+                with(:price).less_than to.to_f
+              elsif to == '*'
+                with(:price).greater_than from.to_f
+              else
+                with(:price).between from.to_f..to.to_f
+              end
+            end
             facet(:price) do
               conf.price_ranges.each do |range|
                 row(range) do
-                  with(:price, Range.new(range.split('-').first, range.split('-').last))
+                  from, to = range.split('-').first, range.split('-').last
+                  if from == '*' && to == '*'
+                    without(:price)
+                  elsif from == '*'
+                    with(:price).less_than to.to_f
+                  elsif to == '*'
+                    with(:price).greater_than from.to_f
+                  else
+                    with(:price).between from.to_f..to.to_f
+                  end
                 end
               end
-
-              # TODO add greater than range
             end
 
             facet(:taxon_ids)
